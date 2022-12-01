@@ -25,19 +25,17 @@ Enable those services by typing as root:
 ~~~
 Managing services is documented on the Void website so feel free to read along if there are questions.
 
-## [T440p] Boot Error: Unknown key identifier 'zoom'
 
-This is a quiete harmless error during boot, but in case you want to have it away, do the following:
-- Copy the keyboard file to the acording direction:
+## [T440p] Suspend, Hibernate and closing the lid
+
+By default the __apcid service__ and the __elogind-service__ don't go well which each other. To prevent interfering you have to configure the elogind.conf file. Under [Login] uncoment every _Handle_ option and set it to _'ignore'_, for example:
 ~~~
-# mkdir -p /etc/udev/hwdb.d/
-# cp /usr/lib/udev/hwdb.d/60-keyboard.hwdb /etc/udev/hwdb.d/
+[Login]
+HandlePowerKey=ignore
+...
 ~~~
-- Then comment out all the lines that contain the word 'zoom' under the linovo/ibm section.
-- After that run the following command:
-~~~
-# udevadm hwdb --update && udevadm control --reload-rules && udevadm trigger
-~~~
+Reboot your system and everything should work as desired. 
+
 
 ## Automatic mounting of USB-Sticks
 
@@ -55,3 +53,20 @@ Exec=dbus-run-session bspwm
 You can put this in your .xinitrc file as well if you are using __startx__ for booting into your desktop.
 3. Make sure your user is in the __storage group__.
 4. Reboot.
+
+
+## [T440p] Boot Error: Unknown key identifier 'zoom'
+
+This is a quiete harmless error during boot, but in case you want to have it away, do the following:
+- Copy the keyboard file to the acording direction:
+~~~
+# mkdir -p /etc/udev/hwdb.d/
+# cp /usr/lib/udev/hwdb.d/60-keyboard.hwdb /etc/udev/hwdb.d/
+~~~
+- Then comment out all the lines that contain the word 'zoom' under the linovo/ibm section.
+- After that run the following command:
+~~~
+# udevadm hwdb --update && udevadm control --reload-rules && udevadm trigger
+~~~
+
+
