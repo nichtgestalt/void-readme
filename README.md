@@ -36,6 +36,15 @@ HandlePowerKey=ignore
 ~~~
 Reboot your system and everything should work as desired. 
 
+I personally like to suspend to RAM when pressing the power button. So I changed it behavior in /etc/acpi/handle.sh :
+~~~
+...
+logger "PowerButton pressed: $2, suspending(changed by user)..."
+#shutdown -P now
+zzz
+;;
+...
+~~~
 
 ## Automatic mounting of USB-Sticks
 
